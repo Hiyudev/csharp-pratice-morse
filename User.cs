@@ -1,4 +1,5 @@
 ﻿using System;
+using Spectre.Console;
 
 namespace MorseGame
 {
@@ -6,30 +7,7 @@ namespace MorseGame
     {
         public static bool Continue(string question)
         {
-            Console.WriteLine(question);
-            string userResponse = Console.ReadLine();
-            string upperResponse = userResponse.ToUpper();
-            bool boolResponse = false;
-
-            switch (upperResponse)
-            {
-                case "Y":
-                case "Ye":
-                case "Yes":
-                case "S":
-                case "Si":
-                case "Sim":
-                    boolResponse = true;
-                    break;
-                default:
-                case "N":
-                case "Nao":
-                case "No":
-                    boolResponse = false;
-                    break;
-            }
-
-            return boolResponse;
+            return AnsiConsole.Confirm(question);
         }
         public static T Ask<T>(string question)
         {
@@ -56,11 +34,11 @@ namespace MorseGame
         }
         public static void CorrectAnswer()
         {
-            Console.WriteLine("Congratulations, you answered correctly!");
+            AnsiConsole.Markup("[default on green]Congratulations[/], you answered correctly!");
         }
         public static void WrongAnswer()
         {
-            Console.WriteLine("Oops ! Looks like you put wrong answer!");
+            AnsiConsole.Markup("[default on red]Ops[/] ! Looks like you put wrong answer!");
         }
         public static void Comment(string comment)
         {

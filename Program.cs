@@ -1,4 +1,5 @@
 ﻿using System;
+using Spectre.Console;
 
 namespace MorseGame
 {
@@ -12,22 +13,28 @@ namespace MorseGame
 
         static void Loop()
         {
-            bool willContinue = User.Continue("Want to play it? ( Y/N )");
+            bool willContinue = User.Continue("Want to play it?");
 
             if (willContinue)
             {
-                int difficulty = User.Ask<int>("What difficulty you want to play it? \n0 - EASY\n1 - NORMAL\n2 - HARD");
+                string difficulty = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("What [red]difficulty[/] you want to play it?")
+                        .PageSize(3)
+                        .AddChoices(new[] {
+                            "Easy", "Normal", "Hard"
+                        }));
 
                 switch (difficulty)
                 {
-                    case 0:
+                    case "Easy":
                         Game.ChangeDifficulty(Game.difficulties.EASY);
                         break;
-                    case 1:
+                    case "Normal":
                     default:
                         Game.ChangeDifficulty(Game.difficulties.NORMAL);
                         break;
-                    case 2:
+                    case "Hard":
                         Game.ChangeDifficulty(Game.difficulties.HARD);
                         break;
                 }
